@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CRA Keep Alive
 // @namespace    CRA
-// @version      0.2.1
+// @version      0.2.3
 // @description  try to take over the world!
 // @author       Invertex
 // @updateURL    https://github.com/Invertex/CRAKeepActive/raw/main/CRAKeepActive/cra_keep_active.user.js
@@ -46,19 +46,19 @@ function keepAlive(button)
 
 function keepAliveTrigger(docBody)
 {
-    const dismiss = docBody.querySelector('div#modal-footer > button.popup-modal-dismiss');
-    if(dismiss) {
-        setTimeout(() => { keepAlive(dismiss); }, 5000);
+    const continueBtn = docBody.querySelector('div.cdk-overlay-container div.cdk-overlay-pane div.mat-mdc-dialog-surface div.quartz-dialog .mat-mdc-dialog-content button.quartz-primary-button');
+    if(continueBtn) {
+        const label = continueBtn.querySelector('.mdc-button__label > span');
+        if(label?.innerText?.includes("Continue session"))
+        {
+            setTimeout(() => { keepAlive(continueBtn); }, 5000);
+        }
     }
-    else {
-        const continueBtn = docBody.querySelector('div.mat-mdc-dialog-surface div.quartz-dialog .mat-mdc-dialog-content button.quartz-primary-button');
-        if(continueBtn) {
-            const label = continueBtn.querySelector('.mdc-button__label > span');
-            if(label?.innerText?.includes("Continue session"))
-            {
-                setTimeout(() => { keepAlive(continueBtn); }, 5000);
-            }
-
+    else
+    {
+        const dismiss = docBody.querySelector('div#modal-footer > button.popup-modal-dismiss');
+        if(dismiss) {
+            setTimeout(() => { keepAlive(dismiss); }, 5000);
         }
     }
     unsafeWindow?.awsc?.warningTimer?.extendSession();
@@ -69,7 +69,7 @@ function doKeepAliveRefresh(mainFrame)
 {
     setTimeout(() => {
         if(mainFrame == null) { mainFrame = craklFrame; }
-        mainFrame.contentWindow.location.reload(true);
+        mainFrame.contentWindow.location.reload();
         doKeepAliveRefresh(mainFrame); }, 50000);
 }
 
@@ -114,7 +114,7 @@ async function createKeepAliveFrame(url)
             };
 
             craklFrame.src = url;
-            doKeepAliveRefresh(craklFrame);
+           // doKeepAliveRefresh(craklFrame);
         }
      }
 }
