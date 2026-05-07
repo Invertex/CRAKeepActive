@@ -1,9 +1,11 @@
 // ==UserScript==
 // @name         CRA Keep Alive
 // @namespace    CRA
-// @version      2026-04-28
+// @version      0.2.1
 // @description  try to take over the world!
 // @author       Invertex
+// @updateURL    https://github.com/Invertex/CRAKeepActive/blob/main/CRAKeepActive/cra_keep_active.user.js
+// @downloadURL  https://github.com/Invertex/CRAKeepActive/blob/main/CRAKeepActive/cra_keep_active.user.js
 // @match        https://apps8.ams-sga.cra-arc.gc.ca/gol-ged/mima/ngbeta/
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=gc.ca
 // @match        https://gc.ca/*
