@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CRA Keep Alive
 // @namespace    CRA
-// @version      0.2.6
+// @version      0.2.7
 // @description  try to take over the world!
 // @author       Invertex
 // @updateURL    https://github.com/Invertex/CRAKeepActive/raw/main/CRAKeepActive/cra_keep_active.user.js
@@ -215,10 +215,14 @@ async function processPage(url)
     }
     else if(url.includes('/gol-ged/awsc/amss/enrol/2fa-otp'))
     {
-        const doNotAsk = await awaitElem(document, 'body #doAcceptCookie', argsChildAndSub);
-        if(doNotAsk)
+        const otpForm = await awaitElem(document, 'body #TwoFactorAuthenticationOTPForm', argsChildAndSub);
+        
+        if(otpForm)
         {
+            const doNotAsk = await awaitElem(otpForm, '#doAcceptCookie', argsChildAndSub);
             doNotAsk.click();
+            const otpField = await awaitElem(otpForm, '.inputContainer input#otp', argsChildAndSub);
+            otpField.focus();
         }
     }
     else if(url.endsWith('e-services/cra-login-services.html'))
